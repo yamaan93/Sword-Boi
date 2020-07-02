@@ -9,7 +9,8 @@ public class playerMovement : MonoBehaviour
     
     public float horizontalForce = 200f;
     public float jumpForce = 200f;
-    public float maxVelocity = 50f; 
+    public float maxVelocity = 50f;
+    public SpriteRenderer sr;
     bool isGrounded = false;
     
     void Start()
@@ -37,10 +38,13 @@ public class playerMovement : MonoBehaviour
         if (Input.GetKey("d")&& rb.GetPointVelocity(Vector2.zero).x < maxVelocity)
         { 
             rb.AddForce(horzintalMovement );
+            sr.flipX = true;
+
         }
         if (Input.GetKey("a")&& rb.GetPointVelocity(Vector2.zero).x > maxVelocity*-1)
         {
             rb.AddForce(horzintalMovement * -1);
+            sr.flipX = false;
         }
 
         if (jump == true && isGrounded == true) 
