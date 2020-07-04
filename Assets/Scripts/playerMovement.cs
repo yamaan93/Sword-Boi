@@ -12,7 +12,7 @@ public class playerMovement : MonoBehaviour
     public float maxVelocity = 50f;
     public SpriteRenderer sr;
     bool isGrounded = false;
-    
+    public bool isFlipped; 
     void Start()
     {
         
@@ -38,13 +38,15 @@ public class playerMovement : MonoBehaviour
         if (Input.GetKey("d")&& rb.GetPointVelocity(Vector2.zero).x < maxVelocity)
         { 
             rb.AddForce(horzintalMovement );
-            sr.flipX = true;
+            
+            isFlipped = true; 
 
         }
         if (Input.GetKey("a")&& rb.GetPointVelocity(Vector2.zero).x > maxVelocity*-1)
         {
             rb.AddForce(horzintalMovement * -1);
-            sr.flipX = false;
+            
+            isFlipped = false;
         }
 
         if (jump == true && isGrounded == true) 
@@ -52,9 +54,19 @@ public class playerMovement : MonoBehaviour
            rb.AddForce(jumpVector,ForceMode2D.Impulse);
         }
 
+        if (isFlipped == true)
+        {
+            sr.flipX = true;
+        }
+        else
+        {
+            sr.flipX = false;
+        }
+        
+        
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnCollisionStay2D(Collision2D col)
     {
         isGrounded = true;
     }
